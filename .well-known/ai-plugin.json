@@ -10,10 +10,10 @@
   },
   "api": {
     "type": "openapi",
-    "url": "https://king-prawn-app-2nkgd.ondigitalocean.app/.well-known/openapi.yaml",
+    "url": "https://seashell-app-zwt3p.ondigitalocean.app/.well-known/openapi.yaml",
     "has_user_authentication": false
   },
-  "logo_url": "https://king-prawn-app-2nkgd.ondigitalocean.app/.well-known/logo.png",
+  "logo_url": "https://seashell-app-zwt3p.ondigitalocean.app//.well-known/logo.png",
   "contact_email": "hello@contact.com", 
   "legal_info_url": "http://example.com/legal-info"
 }
