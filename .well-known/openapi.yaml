@@ -2,9 +2,9 @@ openapi: 3.0.0
 info:
   title: Retrieval Plugin API
   version: 1.0.0
-  description: This API lets you search through the LangChain Documentation.
+  description: This API lets you search through the LangChain and Pinecone Documentation.
 servers:
-  - url: https://seashell-app-zwt3p.ondigitalocean.app
+  - url: https://walrus-app-2qvap.ondigitalocean.app
 paths:
   /query:
     post:
