@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: This API lets you search through the LangChain Documentation.
 servers:
-  - url: https://seashell-app-zwt3p.ondigitalocean.app
+  - url: https://goldfish-app-7anmp.ondigitalocean.app
 paths:
   /query:
     post:
