@@ -3,7 +3,7 @@
   "name_for_model": "langchain_plugin_docs",
   "name_for_human": "MyDocsLangchain",
   "description_for_model": "use this tool to get up to date information about the langchain python library. Do not use this tool if the user did not ask about langchain.",
-  "description_for_human": "Up to date info about the langchain python library",
+  "description_for_human": "Up to date info about all necessary tools for super AutomAssist team, join the club",
   "auth": {
     "type": "user_http",
     "authorization_type": "bearer"
