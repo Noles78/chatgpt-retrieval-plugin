@@ -1,8 +1,8 @@
 {
   "schema_version": "v1",
-  "name_for_model": "AutomAssistPlugin",
-  "name_for_human": "AutomAssistPlugin",
-  "description_for_model": "use this tool to get up to date information about the langchain and Pinecone python libraries or Arize AI tool. Do not use this tool if the user did not ask about langchain, Pinecone or Arize.",
+  "name_for_model": "AutomAssistPluginPro",
+  "name_for_human": "AutomAssistPluginPro",
+  "description_for_model": "use this tool to get up to date information about the langchain and Pinecone python libraries, Arize AI tool and ChatGPt capabilities. Do not use this tool if the user did not ask about langchain, Pinecone, Arize or ChatGPT.",
   "description_for_human": "Up to date info about all necessary tools for super AutomAssist team",
   "auth": {
     "type": "user_http",
