@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: This API lets you search through the LangChain and Pinecone Documentation.
 servers:
-  - url: https://monkfish-app-gi4r7.ondigitalocean.app
+  - url: https://plankton-app-x8igs.ondigitalocean.app
 paths:
   /query:
     post:
