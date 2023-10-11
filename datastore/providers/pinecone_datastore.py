@@ -182,6 +182,7 @@ class PineconeDataStore(DataStore):
         """
         Removes vectors by ids, filter, or everything from the index.
         """
+        delete_all = False  
         # Delete all vectors from the index if delete_all is True
         if delete_all:
             try:
