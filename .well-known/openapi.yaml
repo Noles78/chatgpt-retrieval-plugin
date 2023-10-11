@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: This API lets you search through the LangChain and Pinecone Documentation.
 servers:
-  - url: https://walrus-app-2qvap.ondigitalocean.app
+  - url: https://seahorse-app-5nltm.ondigitalocean.app
 paths:
   /query:
     post:
