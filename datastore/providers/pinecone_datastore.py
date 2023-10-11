@@ -108,69 +108,42 @@ class PineconeDataStore(DataStore):
         return doc_ids
 
     @retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(3))
-    async def _query(
-        self,
-        queries: List[QueryWithEmbedding],
-    ) -> List[QueryResult]:
-        """
-        Takes in a list of queries with embeddings and filters and returns a list of query results with matching document chunks and scores.
-        """
+async def delete(
+    self,
+    ids: Optional[List[str]] = None,
+    filter: Optional[DocumentMetadataFilter] = None,
+    delete_all: Optional[bool] = None,
+) -> bool:
+    """
+    Removes vectors by ids, filter, or everything from the index.
+    """
+    if delete_all:
+        logger.warning("The delete_all option is disabled and will not be used.")
+    
+    # Delete vectors that match the filter from the index if the filter is not empty
+    pinecone_filter = self._get_pinecone_filter(filter)
+    if pinecone_filter != {}:
+        try:
+            logger.info(f"Deleting vectors with filter {pinecone_filter}")
+            self.index.delete(filter=pinecone_filter)
+            logger.info(f"Deleted vectors with filter successfully")
+        except Exception as e:
+            logger.error(f"Error deleting vectors with filter: {e}")
+            raise e
 
-        # Define a helper coroutine that performs a single query and returns a QueryResult
-        async def _single_query(query: QueryWithEmbedding) -> QueryResult:
-            logger.debug(f"Query: {query.query}")
+    # Delete vectors that match the document ids from the index if the ids list is not empty
+    if ids is not None and len(ids) > 0:
+        try:
+            logger.info(f"Deleting vectors with ids {ids}")
+            pinecone_filter = {"document_id": {"$in": ids}}
+            self.index.delete(filter=pinecone_filter)  # type: ignore
+            logger.info(f"Deleted vectors with ids successfully")
+        except Exception as e:
+            logger.error(f"Error deleting vectors with ids: {e}")
+            raise e
 
-            # Convert the metadata filter object to a dict with pinecone filter expressions
-            pinecone_filter = self._get_pinecone_filter(query.filter)
+    return True
 
-            try:
-                # Query the index with the query embedding, filter, and top_k
-                query_response = self.index.query(
-                    # namespace=namespace,
-                    top_k=query.top_k,
-                    vector=query.embedding,
-                    filter=pinecone_filter,
-                    include_metadata=True,
-                )
-            except Exception as e:
-                logger.error(f"Error querying index: {e}")
-                raise e
-
-            query_results: List[DocumentChunkWithScore] = []
-            for result in query_response.matches:
-                score = result.score
-                metadata = result.metadata
-                # Remove document id and text from metadata and store it in a new variable
-                metadata_without_text = (
-                    {key: value for key, value in metadata.items() if key != "text"}
-                    if metadata
-                    else None
-                )
-
-                # If the source is not a valid Source in the Source enum, set it to None
-                if (
-                    metadata_without_text
-                    and "source" in metadata_without_text
-                    and metadata_without_text["source"] not in Source.__members__
-                ):
-                    metadata_without_text["source"] = None
-
-                # Create a document chunk with score object with the result data
-                result = DocumentChunkWithScore(
-                    id=result.id,
-                    score=score,
-                    text=metadata["text"] if metadata and "text" in metadata else None,
-                    metadata=metadata_without_text,
-                )
-                query_results.append(result)
-            return QueryResult(query=query.query, results=query_results)
-
-        # Use asyncio.gather to run multiple _single_query coroutines concurrently and collect their results
-        results: List[QueryResult] = await asyncio.gather(
-            *[_single_query(query) for query in queries]
-        )
-
-        return results
 
     @retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(3))
     async def delete(
