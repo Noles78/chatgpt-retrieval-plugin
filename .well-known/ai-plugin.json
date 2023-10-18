@@ -10,7 +10,7 @@
   },
   "api": {
     "type": "openapi",
-    "url": "https://sea-turtle-app-9rk2yTest.ondigitalocean.app/.well-known/openapi.yaml",
+    "url": "https://sea-turtle-app-9rk2y.ondigitalocean.app/.well-known/openapi.yaml",
     "has_user_authentication": false
   },
   "logo_url": "https://sea-turtle-app-9rk2y.ondigitalocean.app/.well-known/logo.png",
